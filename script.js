@@ -345,6 +345,44 @@ Thanks 🙏`;
     sections.forEach(section => {
         sectionObserver.observe(section);
     });
+
+    // Ensure image paths and background-image URLs are properly encoded so images load
+    function encodeAllImagesAndBackgrounds() {
+        // Encode <img> src attributes
+        document.querySelectorAll('img').forEach(img => {
+            const src = img.getAttribute('src');
+            if (src) {
+                const encoded = encodeURI(src);
+                if (encoded !== src) img.src = encoded;
+            }
+        });
+
+        // Encode inline style background-image urls
+        document.querySelectorAll('[style]').forEach(el => {
+            const bg = el.style.backgroundImage;
+            if (bg && bg.includes('url')) {
+                const m = bg.match(/url\((['"]?)(.+?)\1\)/);
+                if (m) {
+                    const url = m[2];
+                    const encoded = encodeURI(url);
+                    el.style.backgroundImage = `url("${encoded}")`;
+                }
+            }
+        });
+
+        // Encode dataset.gallery entries used for modal galleries
+        document.querySelectorAll('.portfolio-item').forEach(item => {
+            const raw = item.dataset.gallery;
+            if (raw) {
+                const parts = raw.split('|').map(s => s.trim()).filter(Boolean);
+                const fixed = parts.map(p => encodeURI(p)).join('|');
+                if (fixed !== raw) item.dataset.gallery = fixed;
+            }
+        });
+    }
+
+    // Run encoding early so gallery and image elements use encoded paths
+    encodeAllImagesAndBackgrounds();
     
     // Back to home functionality
     const backHomeLink = document.querySelector('.back-home');

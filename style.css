@@ -1,49 +1,3 @@
-/* Reset بسيط */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* الخطوط والألوان الأساسية */
-body {
-  font-family: Arial, sans-serif;
-  line-height: 1.6;
-  padding: 20px;
-}
-
-/* Container رئيسي */
-.container {
-  max-width: 1200px; /* أقصى عرض على الشاشات الكبيرة */
-  margin: auto;
-  padding: 20px;
-}
-
-/* الصور والفيديوهات */
-img, video {
-  max-width: 100%;
-  height: auto;
-}
-
-/* Grid / Flex responsive */
-.row {
-  display: flex;
-  flex-wrap: wrap; /* خلي العناصر تنتقل لسطر جديد لو ضاقت */
-  gap: 20px;
-}
-
-.col {
-  flex: 1; /* كل عمود ياخد نفس المساحة */
-  min-width: 250px; /* الحد الأدنى لكل عمود */
-}
-
-/* Media Queries للتخصيص حسب حجم الشاشة */
-@media (max-width: 768px) {
-  .row {
-    flex-direction: column; /* عمود واحد على الموبايل */
-  }
-}
-
 /* Reset & Base Styles */
 * {
     margin: 0;
@@ -678,7 +632,7 @@ p {
 }
 
 .portfolio-item {
-    group: cursor;
+    cursor: pointer;
     overflow: hidden;
     border-radius: 15px;
     transition: var(--transition);
@@ -1104,6 +1058,20 @@ p {
     .contact-links {
         flex-direction: column;
         align-items: center;
+    }
+
+    /* Reduce section padding to account for fixed navbar on small screens */
+    .page {
+        padding: 80px 0;
+    }
+
+    .hero-section {
+        height: calc(100vh - 80px);
+    }
+
+    /* Ensure about image keeps good proportions on small screens */
+    .about-image {
+        aspect-ratio: 4/5;
     }
 }
 
